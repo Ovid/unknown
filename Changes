@@ -1,4 +1,11 @@
 Revision history for Perl extension Unknown::Values.
 
+0.003   February 19, 2012
+        - Make a non-trial release to claim the namespace on CPAN
+        - Update docs to be explicit about EXPORT
+
+0.002   February 19, 2012
+        - First release
+
 0.001   February 19, 2013
         - Implement 3VL in Perl ("unknown" instead of "undef")
