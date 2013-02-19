@@ -4,7 +4,7 @@ Unknown::Values - Use 'unknown' values instead of undef ones
 
 # VERSION
 
-version 0.001
+version 0.003
 
 # SYNOPSIS
 
@@ -27,7 +27,7 @@ version 0.001
 
 # DESCRIPTION
 
-This code is experimental. Some behavior may change.
+This code is alpha. Some behavior may change.
 
 This module provides you with two new keywords, `unknown` and `is_unknown`.
 From the point of view of logic, the is often an improvement over `undef`
@@ -80,6 +80,20 @@ they compare to other values. Now replace the above with `undef`:
     my @greater = grep { $_ > 4 } @numbers; # undef,5,6,undef,7
 
 In other words, you're probably getting garbage.
+
+# EXPORTS
+
+## `unknown`
+
+    my $value = unknown;
+
+A safer replacement for `undef`.
+
+## `is_unknown`
+
+    if ( is_unknown $value ) { ... }
+
+Test if a value is `unknown`.
 
 # FUNCTIONS
 
