@@ -1,12 +1,14 @@
 # NAME
 
-unknown - Use 'unknown' values instead of undef ones
+Unknown::Values - Use 'unknown' values instead of undef ones
 
 # VERSION
 
 version 0.001
 
 # SYNOPSIS
+
+    use Unknown::Values;
 
     my $value = unknown;
     my @array = ( 1, 2, 3, $value, 4, 5 );
