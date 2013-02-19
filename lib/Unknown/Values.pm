@@ -41,9 +41,23 @@ __END__
         }
     }
 
+=head1 EXPORTS
+
+=head2 C<unknown>
+
+    my $value = unknown;
+
+A safer replacement for C<undef>.
+
+=head2 C<is_unknown>
+
+    if ( is_unknown $value ) { ... }
+
+Test if a value is C<unknown>.
+
 =head1 DESCRIPTION
 
-This code is experimental. Some behavior may change.
+This code is alpha. Some behavior may change.
 
 This module provides you with two new keywords, C<unknown> and C<is_unknown>.
 From the point of view of logic, the is often an improvement over C<undef>
