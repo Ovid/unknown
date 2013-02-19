@@ -1,0 +1,4 @@
+Revision history for Perl extension Unknown::Values.
+
+0.001   February 19, 2013
+        - Implement 3VL in Perl ("unknown" instead of "undef")
