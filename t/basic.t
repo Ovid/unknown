@@ -1,7 +1,7 @@
 use Test::Most;
 
 use lib 'lib';
-use unknown;
+use Unknown::Values;
 
 ok !( 1 == unknown ), 'Direct comparisons to unknown should fail (==)';
 ok !( unknown == unknown ), '... and unknown should not be == to itself';

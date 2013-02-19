@@ -3,20 +3,20 @@ use warnings;
 
 # ABSTRACT: Use 'unknown' values instead of undef ones
 
-package unknown;
+package Unknown::Values;
 
 use 5.01000;
-use unknown::value;
+use Unknown::Values::Instance;
 
 use base 'Exporter';
 use Scalar::Util 'blessed';
 our @EXPORT = qw(unknown is_unknown);
-use constant unknown => unknown::value->new;
+use constant unknown => Unknown::Values::Instance->new;
 
 sub is_unknown($) {
     defined $_[0]
       && blessed( $_[0] )
-      && $_[0]->isa("unknown::value");
+      && $_[0]->isa("Unknown::Values::Instance");
 }
 
 1;
@@ -24,6 +24,8 @@ sub is_unknown($) {
 __END__
 
 =head1 SYNOPSIS
+
+    use Unknown::Values;
 
     my $value = unknown;
     my @array = ( 1, 2, 3, $value, 4, 5 );

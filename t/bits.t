@@ -1,7 +1,7 @@
 use Test::Most 'die';
 
 use lib 'lib';
-use unknown;
+use Unknown::Values;
 
 my $value = unknown;
 throws_ok { $value & 1 }

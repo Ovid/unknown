@@ -2,7 +2,7 @@ use Test::Most 'die';
 
 use lib 'lib';
 use 5.12.0;
-use unknown;
+use Unknown::Values;
 
 # Kleene's three-value logic
 

@@ -3,7 +3,7 @@ use warnings;
 
 # ABSTRACT: Internal value object for the "unknown" distribution
 
-package unknown::value;
+package Unknown::Values::Instance;
 use Carp 'confess';
 
 use 5.01000;
@@ -75,4 +75,4 @@ __END__
 
 =head1 DESCRIPTION
 
-For Internal Use Only! See L<unknown>.
+For Internal Use Only! See L<Unknown::Values>.
