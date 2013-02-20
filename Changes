@@ -1,5 +1,8 @@
 Revision history for Perl extension Unknown::Values.
 
+0.004
+        - is_unknown now defaults to checking $_ (Toby Inkster)
+
 0.003   February 19, 2012
         - Make a non-trial release to claim the namespace on CPAN
         - Update docs to be explicit about EXPORT
