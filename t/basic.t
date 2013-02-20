@@ -29,7 +29,7 @@ eq_or_diff [ grep { is_unknown $_ } @array ], [unknown],
 my @sorted = sort { $a <=> $b } ( 4, 1, unknown, 5, unknown, unknown, 7 );
 eq_or_diff \@sorted, [ 1, 4, 5, 7, unknown, unknown, unknown ],
   'Unknown values should sort at the end of the list';
-my @sorted = sort { $b <=> $a } ( 4, 1, unknown, 5, unknown, unknown, 7 );
+@sorted = sort { $b <=> $a } ( 4, 1, unknown, 5, unknown, unknown, 7 );
 eq_or_diff \@sorted, [ unknown, unknown, unknown, 7, 5, 4, 1 ],
   '... but the sort to the front in reverse';
 
