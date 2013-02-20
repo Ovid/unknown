@@ -1,0 +1,6 @@
+#!/bin/bash
+dzil clean && dzil build
+cd Unknown-Values-*/
+pod2markdown < lib/Unknown/Values.pm > README.md
+mv README.md ..
+cd ..
