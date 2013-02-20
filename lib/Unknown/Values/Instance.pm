@@ -11,10 +11,10 @@ my @to_overload;
 
 BEGIN {
     my %to_overload = (
-        compare     => [qw{ <=> cmp <= >= < > lt le gt ge == eq !+ ne}],
+        compare     => [qw{ <=> cmp <= >= < > lt le gt ge == eq != ne}],
         math        => [qw{ + - * / ** atan2 cos sin exp log sqrt int abs }],
         string      => [qw{ qr x }],
-        files       => [qw{ files -X }],
+        files       => [qw{ <> -X }],
         bits        => [qw{ << >> & | ^ ~ }],
         bool        => [ 'bool', '!' ],
         dereference => [qw< ${} @{} %{} &{} *{} >],
