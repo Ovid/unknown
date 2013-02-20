@@ -30,9 +30,10 @@ version 0.004
 This code is alpha. Some behavior may change. The module name may change.
 
 This module provides you with two new keywords, `unknown` and `is_unknown`.
-From the point of view of logic, the is often an improvement over `undef`
-values. Consider the following code, used to give underpaid employees a pay
-raise:
+
+`unknown` is conceptually similar to the SQL `NULL` value. From the point
+of view of logic, this often an improvement over `undef` values. Consider the
+following code, used to give underpaid employees a pay raise:
 
     foreach my $employee (@employees) {
         if ( $employee->annual_salary < $threshold ) {
@@ -117,6 +118,14 @@ Test whether a given value is `unknown`.
         ... this is the only one for which this function returns true
     }
 
+Defaults to `$_`:
+
+    foreach (@things) {
+        if ( is_unknown ) {
+            # do something
+        }
+    }
+
 # EQUALITY
 
 An `unknown` value is equal to nothing becuase we don't know what it's value
@@ -133,7 +142,7 @@ Use the `is_unknown` function instead.
         ...
     }
 
-We also assume that inequality holds fails:
+We also assume that inequality fails:
 
     if ( 6 != unknown ) {
         ... always false
@@ -142,10 +151,10 @@ We also assume that inequality holds fails:
         ... always false
     }
 
-__Note__: That's actually problematic because an unknown value doesn't mean a
-non-existent value, just an unknown one, so the value _might_ be equal, but
-we don't know it. From the standpoint of pure logic, it's wrong, but it's so
-awfully convenient that we've allowed it. We might revisit this.
+__Note__: That's actually problematic because an unknown value should be equal
+to itself but not equal to _other_ unknown values. From the standpoint of
+pure logic, it's wrong, but it's so awfully convenient that we've allowed it.
+We might revisit this.
 
 # ILLEGAL OPERATIONS
 
@@ -210,6 +219,40 @@ verification.
     true    || unknown is true
     false   || unknown is unknown
     unknown || unknown is unknown
+
+# WHAT IS WRONG WITH UNDEF?
+
+Currently `undef` has three different coercions: false, zero, or the empty
+string. Sometimes those are correct, but not always. Further, by design, it
+doesn't always emit warnings:
+
+    $ perl -Mstrict -Mwarnings -E 'my $foo; say ++$foo'
+    1
+    $ perl -Mstrict -Mwarnings -E 'my $foo; say $foo + 1'
+    Use of uninitialized value $foo in addition (+) at -e line 1.
+    1
+
+And because it has no precise definition, `undef` might mean any of a number
+of things:
+
+- The value's not applicable
+- It's not known
+- It's not available
+- It's restricted
+- Something else?
+
+In other words, the behavior of `undef` is overloaded, its meaning is
+ambiguous and you are not guaranteed to have warnings if you use it
+incorrectly.
+
+Now think about SQL's `NULL` value. It's problematic, but no alternative has
+taken hold for simple reason: its meaning is clear and its behavior is
+unambiguous. It states quite clearly that 'if I don't have a value, I will
+treat that value as "unknown" via a set of well-defined rules'.
+
+An `unknown` value behaves very much like the SQL `NULL`. It's behavior is
+consistent and predictable. It's meaning is unambiguous. If used incorrectly,
+it's a fatal error.
 
 # NOTES
 
