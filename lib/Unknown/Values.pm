@@ -21,7 +21,17 @@ sub is_unknown(_) {
 
 1;
 
-__END__
+
+
+=pod
+
+=head1 NAME
+
+Unknown::Values - Use 'unknown' values instead of undef ones
+
+=head1 VERSION
+
+version 0.004
 
 =head1 SYNOPSIS
 
@@ -40,22 +50,6 @@ __END__
             push @underpaid => $employee;
         }
     }
-
-=head1 EXPORTS
-
-=head2 C<unknown>
-
-    my $value = unknown;
-
-A safer replacement for C<undef>. Conceptually, C<unknown> behaves very
-similarly to SQL's C<NULL>.
-
-=head2 C<is_unknown>
-
-    if ( is_unknown $value ) { ... }
-
-Test if a value is C<unknown>. Do I<not> use C<< $value->isa(...) >> because
-the class is blessed into is not guaranteed.
 
 =head1 DESCRIPTION
 
@@ -125,6 +119,22 @@ they compare to other values. Now replace the above with C<undef>:
 
 In other words, you're probably getting garbage.
 
+=head1 EXPORTS
+
+=head2 C<unknown>
+
+    my $value = unknown;
+
+A safer replacement for C<undef>. Conceptually, C<unknown> behaves very
+similarly to SQL's C<NULL>.
+
+=head2 C<is_unknown>
+
+    if ( is_unknown $value ) { ... }
+
+Test if a value is C<unknown>. Do I<not> use C<< $value->isa(...) >> because
+the class is blessed into is not guaranteed.
+
 =head1 FUNCTIONS
 
 =head2 C<unknown>
@@ -151,6 +161,26 @@ Defaults to C<$_>:
         if ( is_unknown ) {
             # do something
         }
+    }
+
+=head1 SORTING
+
+C<unknown> values sort to the end of the list, unless you reverse the sort.
+
+    my @sorted = sort { $a <=> $b } ( 4, 1, unknown, 5, unknown, unknown, 7 );
+    eq_or_diff \@sorted, [ 1, 4, 5, 7, unknown, unknown, unknown ],
+      'Unknown values should sort at the end of the list';
+    my @sorted = sort { $b <=> $a } ( 4, 1, unknown, 5, unknown, unknown, 7 );
+    eq_or_diff \@sorted, [ unknown, unknown, unknown, 7, 5, 4, 1 ],
+      '... but the sort to the front in reverse';
+
+This is a bit arbitrary, but some decision had to be made and I thought that
+you'd rather deal with known values first:
+
+    my @things = sort @other_things;
+    foreach (@things) {
+        last if is_unknown;
+        # work with known values
     }
 
 =head1 EQUALITY
@@ -377,3 +407,20 @@ every operator and ensuring that it's handled correctly.
 
 Of course, this would eat up both memory and performance and certainly be
 filled with fiddly bugs.
+
+=head1 AUTHOR
+
+Curtis "Ovid" Poe <ovid@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Curtis "Ovid" Poe.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
+
+__END__
+

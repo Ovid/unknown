@@ -1,5 +1,8 @@
 Revision history for Perl extension Unknown::Values.
 
+0.005
+        - unknowns sort last (bart on blogs.perl.org)
+
 0.004   February 20, 2013
         - Fix two invalid overloads (Toby Inkster #83477)
         - is_unknown now defaults to checking $_ (Toby Inkster #83470)
