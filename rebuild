@@ -1,0 +1,2 @@
+#!/bin/bash
+dzil clean && dzil test && dzil build && ./remarkdown
