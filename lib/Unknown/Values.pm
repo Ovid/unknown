@@ -285,7 +285,7 @@ taken hold for simple reason: its meaning is clear and its behavior is
 unambiguous. It states quite clearly that 'if I don't have a value, I will
 treat that value as "unknown" via a set of well-defined rules'.
 
-An C<unknown> value behaves very much like the SQL C<NULL.. It's behavior is
+An C<unknown> value behaves very much like the SQL C<NULL>. It's behavior is
 consistent and predictable. It's meaning is unambiguous. If used incorrectly,
 it's a fatal error.
 
