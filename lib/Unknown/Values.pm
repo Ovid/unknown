@@ -47,17 +47,19 @@ __END__
 
     my $value = unknown;
 
-A safer replacement for C<undef>.
+A safer replacement for C<undef>. Conceptually, C<unknown> behaves very
+similarly to SQL's C<NULL>.
 
 =head2 C<is_unknown>
 
     if ( is_unknown $value ) { ... }
 
-Test if a value is C<unknown>.
+Test if a value is C<unknown>. Do I<not> use C<< $value->isa(...) >> because
+the class is blessed into is not guaranteed.
 
 =head1 DESCRIPTION
 
-This code is alpha. Some behavior may change.
+This code is alpha. Some behavior may change. The module name may change.
 
 This module provides you with two new keywords, C<unknown> and C<is_unknown>.
 From the point of view of logic, the is often an improvement over C<undef>
@@ -117,7 +119,7 @@ In other words, C<unknown> comparisons return false because we can't know how
 they compare to other values. Now replace the above with C<undef>:
 
     my @numbers = ( 1,2,3,4,undef,5,6,undef,7 );
-    my @less    = grep { $_ < 5 } @numbers; # 1,2,3,4,undef
+    my @less    = grep { $_ < 5 } @numbers; # 1,2,3,4,undef,undef
     my @greater = grep { $_ > 4 } @numbers; # undef,5,6,undef,7
 
 In other words, you're probably getting garbage.
