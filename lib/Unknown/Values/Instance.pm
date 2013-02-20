@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-# ABSTRACT: Internal value object for the "unknown" distribution
+# ABSTRACT: Internal value object for the "Unknown::Values" distribution
 
 package Unknown::Values::Instance;
 use Carp 'confess';
