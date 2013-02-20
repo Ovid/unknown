@@ -30,4 +30,11 @@ my @sorted = sort { $a <=> $b } ( 4, 1, unknown, 5, unknown, unknown, 7 );
 eq_or_diff \@sorted, [ 1, 4, unknown, 5, unknown, unknown, 7 ],
   'Sorting unknown values should leave their position in the list unchanged';
 
+{
+    local $_ = unknown;
+    ok is_unknown, 'is_unknown() defaults to $_';
+    local $_ = undef;
+    ok !is_unknown, '... and knows that undef is not unknown';
+}
+
 done_testing;

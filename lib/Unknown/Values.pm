@@ -13,7 +13,7 @@ use Scalar::Util 'blessed';
 our @EXPORT = qw(unknown is_unknown);
 use constant unknown => Unknown::Values::Instance->new;
 
-sub is_unknown($) {
+sub is_unknown(_) {
     defined $_[0]
       && blessed( $_[0] )
       && $_[0]->isa("Unknown::Values::Instance");
