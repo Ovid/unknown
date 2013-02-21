@@ -38,14 +38,6 @@ sub is_unknown(_) {
 
 =pod
 
-=head1 NAME
-
-Unknown::Values - Use 'unknown' values instead of undef ones
-
-=head1 VERSION
-
-version 0.004
-
 =head1 SYNOPSIS
 
     use Unknown::Values;
@@ -70,6 +62,10 @@ Or:
     my $value = unknown;
 
     if ( 3 < $value ) { ... } # fatal error
+
+    if ( is_unknown $value ) { # not a fatal error
+        ...
+    }
 
 =head1 DESCRIPTION
 
@@ -245,7 +241,8 @@ equality is fatal.
 =head1 ILLEGAL OPERATIONS
 
 Attempting to use C<unknown> values in ways that don't make sense is a fatal
-error.
+error (unless you specified C<< use Unknown::Values 'fatal' >>, in which case,
+using C<unknown> values in I<any> way other than with C<is_unknown> is fatal).
 
     my $value1;
     $value1 += 1; # results in 1

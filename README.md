@@ -32,6 +32,10 @@ Or:
 
     if ( 3 < $value ) { ... } # fatal error
 
+    if ( is_unknown $value ) { # not a fatal error
+        ...
+    }
+
 # DESCRIPTION
 
 This code is alpha. Some behavior may change. The module name may change.
@@ -88,14 +92,6 @@ they compare to other values. Now replace the above with `undef`:
     my @greater = grep { $_ > 4 } @numbers; # undef,5,6,undef,7
 
 In other words, you're probably getting garbage.
-
-# NAME
-
-Unknown::Values - Use 'unknown' values instead of undef ones
-
-# VERSION
-
-version 0.004
 
 # EXPORTS
 
@@ -203,7 +199,8 @@ equality is fatal.
 # ILLEGAL OPERATIONS
 
 Attempting to use `unknown` values in ways that don't make sense is a fatal
-error.
+error (unless you specified `use Unknown::Values 'fatal'`, in which case,
+using `unknown` values in _any_ way other than with `is_unknown` is fatal).
 
     my $value1;
     $value1 += 1; # results in 1
