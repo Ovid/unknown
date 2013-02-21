@@ -25,6 +25,13 @@ version 0.004
         }
     }
 
+Or:
+
+    use Unknown::Values 'fatal';
+    my $value = unknown;
+
+    if ( 3 < $value ) { ... } # fatal error
+
 # DESCRIPTION
 
 This code is alpha. Some behavior may change. The module name may change.
@@ -134,6 +141,9 @@ Defaults to `$_`:
         }
     }
 
+If you have specified `use Unknown::Values 'fatal'`, this is the _only_
+safe use for `unknown` values. Any other use is fatal.
+
 # SORTING
 
 `unknown` values sort to the end of the list, unless you reverse the sort.
@@ -153,6 +163,9 @@ you'd rather deal with known values first:
         last if is_unknown;
         # work with known values
     }
+
+Note that if you specify `use Unknown::Values 'fatal'`, sorting an
+unknown value is fatal.
 
 # EQUALITY
 
@@ -183,6 +196,9 @@ __Note__: That's actually problematic because an unknown value should be equal
 to itself but not equal to _other_ unknown values. From the standpoint of
 pure logic, it's wrong, but it's so awfully convenient that we've allowed it.
 We might revisit this.
+
+Note that if you specify `use Unknown::Values 'fatal'`, testing for
+equality is fatal.
 
 # ILLEGAL OPERATIONS
 
@@ -231,6 +247,10 @@ Or test to see if it's `unknown`:
 
 We follow Kleene's traditional 3VL (three-value logic). See `t/logic.t` for
 verification.
+
+Note that if you specify `use Unknown::Values 'fatal'`, all boolean
+checks with `unknown` values are fatal. Use `is_unknown` to test for unknown
+values.
 
 ## Logical Negation
 
