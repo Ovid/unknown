@@ -30,7 +30,7 @@ use overload @to_overload, '""' => sub {'[unknown]'};
 
 sub new {
     my $class = shift;
-    state $unknown = bless {} => __PACKAGE__;
+    state $unknown = bless {} => $class;
     return $unknown;
 }
 

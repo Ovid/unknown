@@ -7,11 +7,25 @@ package Unknown::Values;
 
 use 5.01000;
 use Unknown::Values::Instance;
+use Unknown::Values::Instance::Fatal;
 
-use base 'Exporter';
 use Scalar::Util 'blessed';
-our @EXPORT = qw(unknown is_unknown);
-use constant unknown => Unknown::Values::Instance->new;
+
+sub import {
+    my $class  = shift;
+    my $caller = caller;
+    
+    my $unknown_class = 'Unknown::Values::Instance';
+    if ( @_ && 'fatal' eq $_[0] ) {
+        $unknown_class = 'Unknown::Values::Instance::Fatal';
+    }
+    my $unknown        = $unknown_class->new;
+    my $unknown_sub    = "${caller}::unknown";
+    my $is_unknown_sub = "${caller}::is_unknown";
+    no strict 'refs';
+    *$unknown_sub = sub () {$unknown};
+    *$is_unknown_sub = \&is_unknown;
+}
 
 sub is_unknown(_) {
     defined $_[0]
@@ -20,7 +34,6 @@ sub is_unknown(_) {
 }
 
 1;
-
 
 
 =pod
