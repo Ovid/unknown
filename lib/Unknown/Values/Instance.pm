@@ -26,7 +26,9 @@ BEGIN {
     }
 }
 
-use overload @to_overload, '""' => sub {'[unknown]'};
+use overload @to_overload, '""' => 'to_string';
+
+sub to_string { '[unknown]' }
 
 sub new {
     my $class = shift;

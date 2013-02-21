@@ -15,8 +15,13 @@ sub compare {
     confess("Comparison operations not allowed with 'fatal unknown' objects");
 
 }
+
 sub sort {
     confess("Sorting operations not allowed with 'fatal unknown' objects");
+}
+
+sub to_string {
+    confess("Printing not allowed with 'fatal unknown' objects");
 }
 
 1;

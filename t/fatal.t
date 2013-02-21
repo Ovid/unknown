@@ -16,5 +16,8 @@ qr/Boolean operations not allowed with 'fatal unknown' objects/,
 throws_ok { my @foo = sort ( 1, unknown, 2 ) }
 qr/Sorting operations not allowed with 'fatal unknown' objects/,
   '... or sorting operations';
+throws_ok { print unknown }
+qr/Printing not allowed with 'fatal unknown' objects/,
+  '... or printing unknown values';
 
 done_testing;
