@@ -1,6 +1,7 @@
 Revision history for Perl extension Unknown::Values.
 
-0.005
+0.005   
+        - Fix version numbers
         - Add fatal unknown objects (multiple comments this would be useful)
         - unknowns sort last (bart on blogs.perl.org)
 
