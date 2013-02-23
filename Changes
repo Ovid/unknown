@@ -1,7 +1,7 @@
 Revision history for Perl extension Unknown::Values.
 
-0.005   
-        - Fix version numbers
+0.005   February 23, 2013
+        - Fix version numbers for modules and Perl (Darin McBride #83563, #83568)
         - Add fatal unknown objects (multiple comments this would be useful)
         - unknowns sort last (bart on blogs.perl.org)
 
