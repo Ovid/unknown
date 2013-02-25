@@ -2,12 +2,3 @@
 
 # damn, I should just hack a makefile? Why would I do that if I have dzil?
 dzil clean && dzil test && dzil build 
-if [ $? -eq 0 ]; then
-    cd Unknown-Values-*/
-    echo Regenerating markdown
-    pod2markdown < lib/Unknown/Values.pm > README.md
-    mv README.md ..
-else
-    echo Could not rebuild
-    exit $?
-fi
