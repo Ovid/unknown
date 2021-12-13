@@ -63,15 +63,15 @@ Consider the types of employees who might have undefined annual salaries:
 - Volunteers
 - Hourly employees
 
-We don't know in advance how many hours a week they will work.
+    We don't know in advance how many hours a week they will work.
 
 - CEO
 
-Maybe it's a private company so his salary is confidential.
+    Maybe it's a private company so his salary is confidential.
 
 - New employee
 
-Their salary has not yet been entered in the database.
+    Their salary has not yet been entered in the database.
 
 If, however, the `$employee->salary` method returns `unknown`, the
 comparison will _always_ return false, thus ensuring that anyone with an
