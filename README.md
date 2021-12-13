@@ -4,7 +4,7 @@ Unknown::Values - Use 'unknown' values instead of undef ones
 
 # VERSION
 
-version 0.005
+version 0.006
 
 # SYNOPSIS
 
@@ -18,7 +18,6 @@ version 0.005
     my @underpaid;
     foreach my $employee (@employees) {
         
-
         # this will never return true if salary is "unknown"
         if ( $employee->salary < $threshold ) {
             push @underpaid => $employee;
@@ -167,7 +166,7 @@ unknown value is fatal.
 
 An `unknown` value is equal to nothing becuase we don't know what it's value
 is (duh). This means that if an employee's salary is unknown, the following
-will __not__ work:
+will **not** work:
 
     if ( $employee->salary == unknown ) { # eq fails, too
         ...
@@ -188,7 +187,7 @@ We also assume that inequality fails:
         ... always false
     }
 
-__Note__: That's actually problematic because an unknown value should be equal
+**Note**: That's actually problematic because an unknown value should be equal
 to itself but not equal to _other_ unknown values. From the standpoint of
 pure logic, it's wrong, but it's so awfully convenient that we've allowed it.
 We might revisit this.
