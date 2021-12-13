@@ -4,6 +4,7 @@ use warnings;
 # ABSTRACT: Internal fatal value object for the "Unknown::Values" distribution
 
 package Unknown::Values::Instance::Fatal;
+
 use Carp 'confess';
 use base 'Unknown::Values::Instance';
 
