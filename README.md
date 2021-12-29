@@ -4,7 +4,7 @@ Unknown::Values - Use 'unknown' values instead of undef ones
 
 # VERSION
 
-version 0.006
+version 0.100
 
 # SYNOPSIS
 
@@ -26,13 +26,24 @@ version 0.006
 
 Or:
 
-    use Unknown::Values 'fatal';
+    use Unknown::Values ':FATAL';
     my $value = unknown;
 
     if ( 3 < $value ) { ... } # fatal error
 
     if ( is_unknown $value ) { # not a fatal error
         ...
+    }
+
+Or:
+
+    # see documentation Unknown::Values::Instance::Object
+    use Unknown::Values ':OBJECT';    # NULL Object pattern
+
+    my $employee = unknown;
+
+    if ( $employee->salary < $threshold ) {
+        # we will never get to here
     }
 
 # DESCRIPTION
@@ -101,6 +112,15 @@ In other words, you're probably getting garbage.
 A safer replacement for `undef`. Conceptually, `unknown` behaves very
 similarly to SQL's `NULL`.
 
+Note that comparisons will return false, but stringification is always a fatal
+This ensures that you cannot accidentally use unknown values as hash keys or
+array indices:
+
+    my $unknown = Person->fetch($id);
+    print $unknown;             # fatal
+    $cache{$unknown}   = $id;   # fatal
+    $ordered[$unknown] = $id;   # fatal
+
 ## `is_unknown`
 
     if ( is_unknown $value ) { ... }
@@ -136,8 +156,21 @@ Defaults to `$_`:
         }
     }
 
-If you have specified `use Unknown::Values 'fatal'`, this is the _only_
+If you have specified `use Unknown::Values ':FATAL'`, this is the _only_
 safe use for `unknown` values. Any other use is fatal.
+
+# NULL Objects
+
+If you're a fan of the NULL object pattern, you can do this:
+
+    use Unknown::Values ':OBJECT';
+
+    my $unknown = unknown;
+    if ( $unknown->foo->bar->baz > $limit ) {
+        # we will never get here
+    }
+
+See [Unknown::Values::Instance::Object](https://metacpan.org/pod/Unknown%3A%3AValues%3A%3AInstance%3A%3AObject) for more information.
 
 # SORTING
 
@@ -404,7 +437,7 @@ Curtis "Ovid" Poe <ovid@cpan.org>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Curtis "Ovid" Poe.
+This software is copyright (c) 2021 by Curtis "Ovid" Poe.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

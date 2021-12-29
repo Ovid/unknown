@@ -28,16 +28,20 @@ BEGIN {
 }
 
 use overload @to_overload, '""' => 'to_string';
+my $CORE_UNKNOWN = __PACKAGE__->new;
 
-sub to_string { '[unknown]' }
+sub to_string {
+    confess("Attempt to coerce unknown value to a string");
+}
 
 sub new {
-    my $class = shift;
-    state $unknown = bless {} => $class;
+    my $class   = shift;
+    my $unknown = bless {} => $class;
     return $unknown;
 }
 
-sub bool { __PACKAGE__->new }
+# this helps to prevent some infinite loops
+sub bool {$CORE_UNKNOWN}
 
 sub compare {
 
@@ -47,7 +51,7 @@ sub compare {
 
 sub sort {
     if    ( $_[2] )                                { return -1 }
-    elsif ( Unknown::Values::is_unknown( $_[1] ) ) { return 0 }   # unnecessary?
+    elsif ( Unknown::Values::is_unknown( $_[1] ) ) { return 0 } # unnecessary?
     else                                           { return 1 }
 }
 
