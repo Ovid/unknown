@@ -10,11 +10,13 @@ use Unknown::Values::Instance;
 use Carp 'confess';
 use base 'Unknown::Values::Instance';
 
-sub isa     {$_[0]}
-sub can     {$_[0]}
-sub DOES    {$_[0]}
-sub VERSION {$_[0]}
+# Make sure we don't grab the UNIVERSAL:: versions of these
+sub isa     { $_[0] }
+sub can     { $_[0] }
+sub DOES    { $_[0] }
+sub VERSION { $_[0] }
 
+# and everything else receives an unknown object
 sub AUTOLOAD { $_[0] }
 
 1;
