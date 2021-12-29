@@ -33,7 +33,7 @@ sub to_string { '[unknown]' }
 
 sub new {
     my $class = shift;
-    state $unknown = bless {} => $class;
+    my $unknown = bless {} => $class;
     return $unknown;
 }
 
