@@ -2,7 +2,9 @@
 #
 # Common parameters
 --break-at-old-comma-breakpoints
---maximum-line-length=78
+
+# I used to have this at 78, but it was too restrtive.
+--maximum-line-length=120
 --indent-columns=4
 --continuation-indentation=2
 --standard-error-output
