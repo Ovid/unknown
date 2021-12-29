@@ -30,7 +30,9 @@ BEGIN {
 use overload @to_overload, '""' => 'to_string';
 my $CORE_UNKNOWN = __PACKAGE__->new;
 
-sub to_string {'[unknown]'}
+sub to_string {
+    confess("Attempt to coerce unknown value to a string");
+}
 
 sub new {
     my $class   = shift;

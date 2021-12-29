@@ -18,19 +18,16 @@ sub import {
     my $caller        = caller;
     my $unknown_class = 'Unknown::Values::Instance';
     if (@_) {
-        if ( 'fatal' eq $_[0] ) {
+        if ( ':FATAL' eq $_[0] ) {
             $unknown_class = 'Unknown::Values::Instance::Fatal';
         }
-        elsif ( 'object' eq $_[0] ) {
+        elsif ( ':OBJECT' eq $_[0] ) {
             $unknown_class = 'Unknown::Values::Instance::Object';
         }
         else {
-            Carp::croak(
-                "I don't know how to create an Unknown::Values object of type '$_[0]'"
-            );
+            Carp::croak("I don't know how to create an Unknown::Values object of type '$_[0]'");
         }
     }
-    Test::Most::explain($unknown_class);
     my $unknown        = $unknown_class->new;
     my $unknown_sub    = "${caller}::unknown";
     my $is_unknown_sub = "${caller}::is_unknown";
@@ -44,8 +41,7 @@ sub is_unknown(_) {
       && blessed( $_[0] )
       && (
         # Unknown::Values::Instance::Object overrides isa()
-        ( 'Unknown::Values::Instance::Object' eq ref $_[0] )
-        || $_[0]->isa("Unknown::Values::Instance")
+        ( 'Unknown::Values::Instance::Object' eq ref $_[0] ) || $_[0]->isa("Unknown::Values::Instance")
       );
 }
 
@@ -73,13 +69,24 @@ sub is_unknown(_) {
 
 Or:
 
-    use Unknown::Values 'fatal';
+    use Unknown::Values ':FATAL';
     my $value = unknown;
 
     if ( 3 < $value ) { ... } # fatal error
 
     if ( is_unknown $value ) { # not a fatal error
         ...
+    }
+
+Or:
+
+    # see documentation Unknown::Values::Instance::Object
+    use Unknown::Values ':OBJECT';    # NULL Object pattern
+
+    my $employee = unknown;
+
+    if ( $employee->salary < $threshold ) {
+        # we will never get to here
     }
 
 =head1 DESCRIPTION
@@ -159,6 +166,15 @@ In other words, you're probably getting garbage.
 A safer replacement for C<undef>. Conceptually, C<unknown> behaves very
 similarly to SQL's C<NULL>.
 
+Note that comparisons will return false, but stringification is always a fatal
+This ensures that you cannot accidentally use unknown values as hash keys or
+array indices:
+
+    my $unknown = Person->fetch($id);
+    print $unknown;             # fatal
+    $cache{$unknown}   = $id;   # fatal
+    $ordered[$unknown] = $id;   # fatal
+
 =head2 C<is_unknown>
 
     if ( is_unknown $value ) { ... }
@@ -194,8 +210,21 @@ Defaults to C<$_>:
         }
     }
 
-If you have specified C<< use Unknown::Values 'fatal' >>, this is the I<only>
+If you have specified C<< use Unknown::Values ':FATAL' >>, this is the I<only>
 safe use for C<unknown> values. Any other use is fatal.
+
+=head1 NULL Objects
+
+If you're a fan of the NULL object pattern, you can do this:
+
+    use Unknown::Values ':OBJECT';
+
+    my $unknown = unknown;
+    if ( $unknown->foo->bar->baz > $limit ) {
+        # we will never get here
+    }
+
+See L<Unknown::Values::Instance::Object> for more information.
 
 =head1 SORTING
 
