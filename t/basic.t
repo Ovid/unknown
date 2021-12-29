@@ -3,23 +3,21 @@ use Test::Most;
 use lib 'lib';
 use Unknown::Values;
 
-ok !( 1 == unknown ), 'Direct comparisons to unknown should fail (==)';
+ok !( 1 == unknown ),       'Direct comparisons to unknown should fail (==)';
 ok !( unknown == unknown ), '... and unknown should not be == to itself';
 ok !( unknown eq unknown ), '... and unknown should not be eq to itself';
-ok !( 2 <= unknown ), 'Direct comparisons to unknown should fail (<=)';
-ok !( 3 >= unknown ), 'Direct comparisons to unknown should fail (>=)';
-ok !( 4 > unknown ), 'Direct comparisons to unknown should fail (>)';
-ok !( 5 < unknown ), 'Direct comparisons to unknown should fail (<)';
-ok !( 6 != unknown ),
-  'Direct negative comparisons to unknown should fail (!=)';
-ok !( 6 ne unknown ),
-  'Direct negative comparisons to unknown should fail (ne)';
+ok !( 2 <= unknown ),       'Direct comparisons to unknown should fail (<=)';
+ok !( 3 >= unknown ),       'Direct comparisons to unknown should fail (>=)';
+ok !( 4 > unknown ),        'Direct comparisons to unknown should fail (>)';
+ok !( 5 < unknown ),        'Direct comparisons to unknown should fail (<)';
+ok !( 6 != unknown ), 'Direct negative comparisons to unknown should fail (!=)';
+ok !( 6 ne unknown ), 'Direct negative comparisons to unknown should fail (ne)';
 ok !( unknown ne unknown ),
   'Negative comparisons of unknown to unknown should fail (ne)';
 
-my $value   = unknown;
-ok is_unknown($value), 'is_unknown should tell usa if a value is unknown';
-ok !is_unknown(42), '... or not';
+my $value = unknown;
+ok is_unknown($value), 'is_unknown should tell us if a value is unknown';
+ok !is_unknown(42),    '... or not';
 
 my @array   = ( 1, 2, 3, $value, 4, 5 );
 my @less    = grep { $_ < 4 } @array;
