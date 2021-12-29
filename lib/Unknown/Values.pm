@@ -8,33 +8,48 @@ package Unknown::Values;
 use 5.01000;
 use Unknown::Values::Instance;
 use Unknown::Values::Instance::Fatal;
+use Unknown::Values::Instance::Object;
+use Carp ();
 
 use Scalar::Util 'blessed';
 
 sub import {
-    my $class  = shift;
-    my $caller = caller;
-    
+    my $class         = shift;
+    my $caller        = caller;
     my $unknown_class = 'Unknown::Values::Instance';
-    if ( @_ && 'fatal' eq $_[0] ) {
-        $unknown_class = 'Unknown::Values::Instance::Fatal';
+    if (@_) {
+        if ( 'fatal' eq $_[0] ) {
+            $unknown_class = 'Unknown::Values::Instance::Fatal';
+        }
+        elsif ( 'object' eq $_[0] ) {
+            $unknown_class = 'Unknown::Values::Instance::Object';
+        }
+        else {
+            Carp::croak(
+                "I don't know how to create an Unknown::Values object of type '$_[0]'"
+            );
+        }
     }
+    Test::Most::explain($unknown_class);
     my $unknown        = $unknown_class->new;
     my $unknown_sub    = "${caller}::unknown";
     my $is_unknown_sub = "${caller}::is_unknown";
     no strict 'refs';
-    *$unknown_sub = sub () {$unknown};
+    *$unknown_sub    = sub {$unknown};
     *$is_unknown_sub = \&is_unknown;
 }
 
 sub is_unknown(_) {
     defined $_[0]
       && blessed( $_[0] )
-      && $_[0]->isa("Unknown::Values::Instance");
+      && (
+        # Unknown::Values::Instance::Object overrides isa()
+        ( 'Unknown::Values::Instance::Object' eq ref $_[0] )
+        || $_[0]->isa("Unknown::Values::Instance")
+      );
 }
 
 1;
-
 
 =pod
 
