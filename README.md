@@ -4,7 +4,7 @@ Unknown::Values - Use 'unknown' values instead of undef ones
 
 # VERSION
 
-version 0.100
+version 0.101
 
 # SYNOPSIS
 
@@ -419,17 +419,6 @@ every operator and ensuring that it's handled correctly.
 
 Of course, this would eat up both memory and performance and certainly be
 filled with fiddly bugs.
-
-# AUTHOR
-
-Curtis "Ovid" Poe <ovid@cpan.org>
-
-# COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2013 by Curtis "Ovid" Poe.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
 
 # AUTHOR
 
